@@ -1,0 +1,15 @@
+$theme-color:#52bbbe99;
+
+.container{
+  width: 100%;
+}
+.answer-container{
+  min-height:200px 
+}
+
+span{
+  margin-left: 10px;
+}
+input[type='radio']:hover{
+  background-color: $theme-color;
+}
