@@ -11,13 +11,12 @@ import polyfillForApp from './utils/polyfill';
 import ErrorPage from './components/ErrorPage';
 import * as action from './actions/surey.action';
 
-const middleWare = applyMiddleware(thunk,logger);
+const middleWare = applyMiddleware(thunk, logger);
 const store = createStore(allReducer, middleWare);
 
 polyfillForApp();
 
 // initial data fetch required in case user directly move to start-survey route 
-
 action.surveyFetch()
   .then(fetchAction => store.dispatch(fetchAction))
   .then(() => {

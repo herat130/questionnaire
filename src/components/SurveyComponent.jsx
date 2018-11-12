@@ -28,7 +28,7 @@ class SurveyComponent extends React.Component {
   }
 
   currentQuestion(quetions, currentOptionIndex) {
-    const currentQuetion = quetions[currentOptionIndex];
+    const currentQuetion = quetions[currentOptionIndex] || {};
     this.setState({
       choices: currentQuetion.choices || [],
       input: currentQuetion.input || '',
@@ -38,7 +38,7 @@ class SurveyComponent extends React.Component {
   handleChangeOptions(e) {
     const updatedInput = e.target.value;
     const { currentOptionIndex, quetions } = this.props;
-    const currentQuetion = quetions[currentOptionIndex];
+    const currentQuetion = quetions[currentOptionIndex] || {};
     const { question_type, multiple } = currentQuetion;
     const { choices } = this.state;
     const selectCondition = (multiple === 'true');
@@ -88,12 +88,36 @@ class SurveyComponent extends React.Component {
   }
 
   render() {
-    const { currentOptionIndex, quetions } = this.props;
+    const { currentOptionIndex, quetions, error, loading } = this.props;
     const { choices, input } = this.state;
-    const currentQuetion = quetions[currentOptionIndex];
+    const currentQuetion = quetions[currentOptionIndex] || {};
     const type = currentQuetion.question_type;
     const multiple = currentQuetion.multiple === 'true';
     const multiline = currentQuetion.multiline === 'true';
+
+    if (loading) {
+      return (
+        <center>
+          <p>Loading...</p>
+        </center>
+      )
+    }
+
+    if (error) {
+      return (
+        <center>
+          <p>We are Facing Technical Issue... please try after some time</p>
+        </center>
+      )
+    }
+
+    if (quetions.length === 0) {
+      return (
+        <center>
+          <h3 className="no-data">There are no survey Available</h3>
+        </center>
+      )
+    }
 
     return (
       <div className={classnames('container')}>
@@ -108,14 +132,21 @@ class SurveyComponent extends React.Component {
         />
         <button
           disabled={currentOptionIndex === 0}
-          className={classnames('button')}
+          className={classnames('button', 'previous')}
           onClick={() => this.goPrevious()}
         >
           &lt; Go Previous
         </button>
         <button
+          style={{ display: (currentOptionIndex + 1) === quetions.length ? 'block' : 'none' }}
+          className={classnames('button', 'submit')}
+          onClick={() => this.goNext()}
+        >
+          Submit
+         </button >
+        <button
           disabled={currentOptionIndex === quetions.length - 1}
-          className={classnames('button', 'float-right')}
+          className={classnames('button', 'float-right', 'next')}
           onClick={() => this.goNext()}
         >
           Go Next &gt;
@@ -129,6 +160,8 @@ function mapStateToProps(state) {
   return {
     quetions: (state.surveyReducer.questionnaire || {}).questions || [],
     currentOptionIndex: state.surveyReducer.currentOptionIndex,
+    error: state.surveyReducer.error,
+    loading: state.surveyReducer.loading,
   }
 }
 
