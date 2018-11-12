@@ -4,8 +4,8 @@ const initialState = {
   loading: true,
   error: false,
   questionnaire: {},
-  userTravrseQuetions: [17], // because of the jumps,i created this array for maintaining previous quetion [path]
-  currentOptionIndex: 17, // quetions array index
+  userTravrseQuetions: [14], // because of the jumps,i created this array for maintaining previous quetion [path]
+  currentOptionIndex: 14, // quetions array index
 };
 
 export default function (state = initialState, action) {

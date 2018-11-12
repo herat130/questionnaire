@@ -1,0 +1,38 @@
+.landing{
+  padding: 2em;
+  max-width: $grid-max-width;
+  margin: 0 auto;
+  .survey-title{
+    text-overflow: ellipsis;
+    width:inherit;
+    white-space: nowrap; 
+    overflow: hidden;
+  }
+  .qtn-ans{
+    text-align: justify;
+    padding: 1em 0em;
+    .questions{
+      color:#9b4dca;
+      font-weight: bold;
+    }
+    .answer{
+      font-weight: bold;
+    }
+  }
+}
+
+.survey-navigation{
+  text-align: center;
+  .button{
+    &:last-child{
+      margin-left: 1em;
+    }
+  }
+}
+
+@media #{$breakpoint-small} {
+  .verify-container{
+    overflow: scroll;
+    height: 65%;
+  }
+}

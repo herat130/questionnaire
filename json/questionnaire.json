@@ -11,6 +11,7 @@
         "description": null,
         "required": false,
         "multiple": "false",
+        "input": "Meine Familie mit Kindern",
         "choices": [
           {
             "label": "Meine Familie mit Kindern",

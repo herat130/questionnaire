@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import surveyReducer from './quiz.reducer';
+import surveyReducer from './survey.reducer';
 
 export default combineReducers({
   surveyReducer,

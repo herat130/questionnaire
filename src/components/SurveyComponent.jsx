@@ -2,8 +2,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
+import { Link } from 'react-router-dom';
 import * as survey from '../actions/surey.action';
 import Answer from './Answer';
+import { VERIFY_SURVEY_FORM } from '../utils/survey.constant';
 
 class SurveyComponent extends React.Component {
 
@@ -32,6 +34,7 @@ class SurveyComponent extends React.Component {
     this.setState({
       choices: currentQuetion.choices || [],
       input: currentQuetion.input || '',
+      currentUpdate: null,
     });
   }
 
@@ -149,13 +152,14 @@ class SurveyComponent extends React.Component {
          </button >
         </div>
         <div className={classnames('column-12', 'text-center')}>
-          <div className="column-4"/>
-          <a
+          <div className="column-4" />
+          <Link
             style={{ display: (currentOptionIndex + 1) === quetions.length ? 'block' : 'none' }}
             className={classnames('button', 'submit', 'column-4')}
+            to={VERIFY_SURVEY_FORM}
           >
-            Submit
-         </a >
+            Verify
+         </Link>
         </div>
       </div>
     )

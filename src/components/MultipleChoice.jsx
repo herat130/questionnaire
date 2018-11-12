@@ -8,17 +8,22 @@ export default class MultipleChoice extends React.Component {
       <div key={v.value}>
         <input
           key={v.value}
+          id={v.label}
           type='radio'
           value={v.value}
           checked={v.selected}
           onChange={this.props.handleChangeOptions}
         />
-        <span htmlFor={v.label}>{v.label}</span>
+        <label className="options" htmlFor={v.label}>{v.label}</label>
       </div>
     )
   }
 
   render() {
-    return this.renderOptions();
+    return (
+      <div>
+        {this.renderOptions()}
+      </div>
+    );
   }
 }
