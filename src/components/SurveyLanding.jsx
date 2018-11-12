@@ -26,9 +26,10 @@ class SurveyLanding extends Component {
       )
     }
     return (
-      <center>
-        <div>
-          <h1>{questionnaire.name}</h1>
+
+      <div className="landing">
+        <center>
+          <h1 className="survey-title">{questionnaire.name}</h1>
           <p>{questionnaire.description}</p>
           <Link
             id="start-survey"
@@ -36,8 +37,8 @@ class SurveyLanding extends Component {
             to={route.START_SURVEY_FORM}>
             Start Survey
           </Link>
-        </div>
-      </center>
+        </center>
+      </div>
     )
   }
 

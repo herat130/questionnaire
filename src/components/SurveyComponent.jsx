@@ -120,8 +120,8 @@ class SurveyComponent extends React.Component {
     }
 
     return (
-      <div className={classnames('container')}>
-        <h2>{currentQuetion.headline} </h2>
+      <div className={classnames('landing')}>
+        <h3>{currentQuetion.headline} </h3>
         <Answer
           handleChangeOptions={this.handleChangeOptions}
           type={type}
@@ -130,27 +130,33 @@ class SurveyComponent extends React.Component {
           input={input}
           choices={choices}
         />
-        <button
-          disabled={currentOptionIndex === 0}
-          className={classnames('button', 'previous')}
-          onClick={() => this.goPrevious()}
-        >
-          &lt; Go Previous
+
+        <div className="survey-navigation">
+          <button
+            disabled={currentOptionIndex === 0}
+            className={classnames('button', 'previous')}
+            onClick={() => this.goPrevious()}
+          >
+            &lt; Return
         </button>
-        <button
-          style={{ display: (currentOptionIndex + 1) === quetions.length ? 'block' : 'none' }}
-          className={classnames('button', 'submit')}
-          onClick={() => this.goNext()}
-        >
-          Submit
+
+          <button
+            disabled={currentOptionIndex === quetions.length - 1}
+            className={classnames('button', 'next')}
+            onClick={() => this.goNext()}
+          >
+            Next &gt;
          </button >
-        <button
-          disabled={currentOptionIndex === quetions.length - 1}
-          className={classnames('button', 'float-right', 'next')}
-          onClick={() => this.goNext()}
-        >
-          Go Next &gt;
-         </button >
+        </div>
+        <div className={classnames('column-12', 'text-center')}>
+          <div className="column-4"/>
+          <a
+            style={{ display: (currentOptionIndex + 1) === quetions.length ? 'block' : 'none' }}
+            className={classnames('button', 'submit', 'column-4')}
+          >
+            Submit
+         </a >
+        </div>
       </div>
     )
   }

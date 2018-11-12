@@ -2,9 +2,12 @@ import React from 'react';
 import { Switch, Route, withRouter } from 'react-router-dom';
 // eslint-disable-next-line no-unused-vars
 import * as milligram from 'milligram';
+import classnames from 'classnames';
 import SurveyLanding from './SurveyLanding';
 import SurveyComponent from './SurveyComponent';
 import * as route from '../utils/survey.constant';
+import Header from './Header';
+import Footer from './Footer';
 
 class App extends React.Component {
   componentDidMount() {
@@ -12,11 +15,15 @@ class App extends React.Component {
   }
   render() {
     return (
-      <Switch>
-        <Route exact path="/" component={SurveyLanding} />
-        <Route path={route.START_SURVEY_FORM} component={SurveyComponent} />
-        <Route path="*" component={SurveyLanding} />
-      </Switch>
+      <div className={classnames('wrapper')}>
+        <Header />
+        <Switch>
+          <Route exact path="/" component={SurveyLanding} />
+          <Route path={route.START_SURVEY_FORM} component={SurveyComponent} />
+          <Route path="*" component={SurveyLanding} />
+        </Switch>
+        <Footer />
+      </div>
     )
   }
 }
