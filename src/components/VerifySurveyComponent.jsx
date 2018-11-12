@@ -10,14 +10,12 @@ class VerifySurveyComponent extends React.Component {
     const { survey } = this.props;
     const { questions } = survey;
 
-    return (questions || []).filter(v => !!v.input).map(v => {
-      return (
-        <div key={v.identifier} className={classnames('qtn-ans')}>
-          <span className={classnames('questions')}>{v.headline}</span><br />
-          <span className={classnames('answer')}>&gt; {v.input}</span>
-        </div>
-      );
-    })
+    return (questions || []).filter(v => !!v.input).map(v =>
+      <div key={v.identifier} className={classnames('qtn-ans')}>
+        <span className={classnames('questions')}>{v.headline}</span><br />
+        <span className={classnames('answer')}>&gt; {v.input}</span>
+      </div>
+    )
   }
 
   render() {

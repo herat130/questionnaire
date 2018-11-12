@@ -17,7 +17,7 @@ export default function () {
                 to={router.HOME_PAGE}
                 className={classnames('header-link')}
               >
-                CLARK's Questionnaire App
+                CLARKs Questionnaire App
           </Link>
             </h4>
           </center>

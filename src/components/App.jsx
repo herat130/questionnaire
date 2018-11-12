@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route, withRouter } from 'react-router-dom';
-// eslint-disable-next-line no-unused-vars
+// eslint-disable-next-line import/extensions
 import 'milligram';
 import classnames from 'classnames';
 import SurveyLanding from './SurveyLanding';
