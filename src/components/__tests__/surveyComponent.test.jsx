@@ -3,9 +3,10 @@ import { configure, mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import Adapter from 'enzyme-adapter-react-16';
 import configureStore from 'redux-mock-store';
+import { HashRouter } from 'react-router-dom';
 import thunk from 'redux-thunk';
 import SurveyComponent from '../SurveyComponent';
-import data, { questions , questions3} from '../__mocks__/survey.data';
+import data, { questions, questions3 } from '../__mocks__/survey.data';
 
 configure({ adapter: new Adapter() });
 
@@ -20,7 +21,9 @@ describe('survey component test suits', () => {
   it('in case of no Quetions ,it should render correctly', () => {
     wrapper = mount(
       <Provider store={store}>
-        <SurveyComponent />
+        <HashRouter>
+          <SurveyComponent />
+        </HashRouter>
       </Provider>);
     expect(wrapper.find('.no-data').length).toBe(1);
   });
@@ -30,7 +33,9 @@ describe('survey component test suits', () => {
     const newStore = mockStore({ surveyReducer: initialData });
     wrapper = mount(
       <Provider store={newStore}>
-        <SurveyComponent />
+        <HashRouter>
+          <SurveyComponent />
+        </HashRouter>
       </Provider>);
     expect(wrapper.find('.no-data').length).toBe(0);
 
@@ -48,7 +53,9 @@ describe('survey component test suits', () => {
     const newStore = mockStore({ surveyReducer: initialData });
     wrapper = mount(
       <Provider store={newStore}>
-        <SurveyComponent />
+        <HashRouter>
+          <SurveyComponent />
+        </HashRouter>
       </Provider>);
     expect(wrapper.find('.no-data').length).toBe(0);
 
@@ -61,4 +68,23 @@ describe('survey component test suits', () => {
     expect(wrapper.find('.submit').get(0).props.style.display).toEqual('none');
   });
 
+  it('simulate click and check update state', () => {
+    initialData.questionnaire.questions = questions3;
+    const newStore = mockStore({ surveyReducer: initialData });
+    wrapper = mount(
+      <Provider store={newStore}>
+        <HashRouter>
+          <SurveyComponent />
+        </HashRouter>
+      </Provider>);
+    wrapper.setState({
+      choices: initialData.questionnaire.questions[0].choices,
+      input: '',
+      currentUpdate: null,
+    });
+    wrapper.find("input[type='radio']").at(0).simulate('click');
+    // wrapper.instance().update();
+    console.log(wrapper.state());
+    console.log(store.getActions());
+  });
 });

@@ -39,6 +39,7 @@ class SurveyComponent extends React.Component {
   }
 
   handleChangeOptions(e) {
+    console.log("-------");
     const updatedInput = e.target.value;
     const { currentOptionIndex, quetions } = this.props;
     const currentQuetion = quetions[currentOptionIndex] || {};

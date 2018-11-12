@@ -21,44 +21,49 @@ export const questions3 = [
     required: false,
     choices: [
       {
-        label: '',
-        value: '',
+        label: 'M',
+        value: 'M',
+        selected: false,
+      },
+      {
+        label: 'N',
+        value: 'N',
         selected: false,
       }
     ],
-    jumps:[]
+    jumps: []
   },
   {
     headline: 'BBB',
     question_type: 'multiple-choice',
-    identifier: 'list_12110962',
+    identifier: 'list_12110963',
     description: null,
     multiple: 'false',
     required: false,
     choices: [
       {
-        label: '',
-        value: '',
+        label: 'L',
+        value: 'L',
         selected: false,
       }
     ],
-    jumps:[]
+    jumps: []
   },
   {
     headline: 'CCC',
     question_type: 'multiple-choice',
-    identifier: 'list_12110962',
+    identifier: 'list_12110964',
     description: null,
     multiple: 'false',
     required: false,
     choices: [
       {
-        label: '',
-        value: '',
+        label: 'P',
+        value: 'P',
         selected: false,
       }
     ],
-    jumps:[]
+    jumps: []
   }
 ]
 
@@ -77,6 +82,62 @@ export const questions = [
         selected: false,
       }
     ],
-    jumps:[]
+    jumps: []
+  }
+]
+
+export const questionsAns = [
+  {
+    headline: 'AAA',
+    question_type: 'multiple-choice',
+    identifier: 'list_12110962',
+    description: null,
+    multiple: 'false',
+    required: false,
+    input: 'A',
+    choices: [
+      {
+        label: 'A',
+        value: 'A',
+        selected: true,
+      },
+      {
+        label: 'B',
+        value: 'B',
+        selected: false,
+      }
+    ],
+    jumps: []
+  },
+  {
+    headline: 'CCC',
+    question_type: 'multiple-choice',
+    identifier: 'list_12110964',
+    description: null,
+    multiple: 'false',
+    required: false,
+    choices: [
+      {
+        label: 'T',
+        value: 'T',
+        selected: false,
+      },
+      {
+        label: 'M',
+        value: 'M',
+        selected: false,
+      }
+    ],
+    jumps: []
+  },
+  {
+    headline: 'MM',
+    question_type: 'text',
+    identifier: 'list_12110963',
+    description: null,
+    multiple: 'false',
+    required: false,
+    input:'user enter text',
+    jumps: []
   }
 ]
