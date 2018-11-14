@@ -3,8 +3,12 @@
   max-width: $grid-max-width;
   margin: 0 auto;
   .option-container{
+    transition: all .5s ease-in-out;
+    background-image: linear-gradient(to left, transparent 50%, #e1bbf1 50%);
     border: 1px dotted #ccc;
     vertical-align: middle;
+    background-size: 200% 100%;
+    background-position: 100% top, 100% top;
     padding: 0.5em 0.1em;
     label ,input{
       margin-bottom:0 !important;
@@ -16,7 +20,7 @@
       width:10%
     }
     &:hover{
-      background-color: #e1bbf1;
+      background-position: 0% top, 0% top;
       color: #1c181d;
     }
     &:active{

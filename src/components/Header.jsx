@@ -12,14 +12,14 @@ export default function () {
         </div> */}
         <div className={classnames('header-navigation', 'column-12')}>
           <center>
-            <span>
+            <h3>
               <Link
                 to={router.HOME_PAGE}
                 className={classnames('header-link')}
               >
-                CLARKs
+                Insurance Survey
           </Link>
-            </span>
+            </h3>
           </center>
         </div>
       </div>

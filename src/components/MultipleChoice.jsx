@@ -5,8 +5,8 @@ export default class MultipleChoice extends React.Component {
   renderOptions() {
     const { choices } = this.props;
     return (choices || []).map(v =>
-      <React.Fragment>
-        <div key={v.value} className="option-container">
+      <div key={v.label}>
+        <div className="option-container">
           <input
             key={v.value}
             id={v.label}
@@ -18,7 +18,7 @@ export default class MultipleChoice extends React.Component {
           <label className="options" htmlFor={v.label}>{v.label}</label>
         </div>
         <div className='blank-space-10' />
-      </React.Fragment>
+      </div>
     )
   }
 
