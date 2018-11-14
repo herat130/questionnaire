@@ -43,6 +43,8 @@ export default function (state = initialState, action) {
       return Object.assign({}, state, {
         currentOptionIndex: state.userTravrseQuetions[movingIndex],
       });
+      case survey.CLEAR_STORE:
+      return Object.assign({},state,{questionnaire:{}})
     default:
       return state;
   }

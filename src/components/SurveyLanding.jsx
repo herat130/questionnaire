@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import classnames from 'classnames';
 import { surveyFetchStart, surveyFetch } from '../actions/surey.action';
 import * as route from '../utils/survey.constant';
 
@@ -33,9 +34,9 @@ class SurveyLanding extends Component {
           <p>{questionnaire.description}</p>
           <Link
             id="start-survey"
-            className='btn'
+            className={classnames('btn','survey-button')}
             to={route.START_SURVEY_FORM}>
-            Start Survey
+            <span>Start Survey</span>
           </Link>
         </center>
       </div>

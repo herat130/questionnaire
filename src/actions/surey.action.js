@@ -42,3 +42,9 @@ export function updateAnswers(index, choices, input) {
     payload: { index, choices, input }
   }
 }
+
+export function clearStore(){
+  return{
+    type:survey.CLEAR_STORE,
+  }
+}

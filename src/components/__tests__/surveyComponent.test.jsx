@@ -79,7 +79,7 @@ describe('survey component test suits', () => {
       </Provider>);
     wrapper.setState({
       choices: initialData.questionnaire.questions[0].choices,
-      input: '',
+      input: '',  
       currentUpdate: null,
     });
     wrapper.find("input[type='radio']").at(0).simulate('click');

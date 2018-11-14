@@ -3,9 +3,13 @@ import { connect } from 'react-redux';
 import classnames from 'classnames';
 import { Link } from 'react-router-dom';
 import * as routes from '../utils/survey.constant';
+import * as actions from '../actions/surey.action';
 
 class VerifySurveyComponent extends React.Component {
 
+  clearStore() {
+    this.props.clearStore();
+  }
   renderQuestionAnswer() {
     const { survey } = this.props;
     const { questions } = survey;
@@ -30,6 +34,7 @@ class VerifySurveyComponent extends React.Component {
           <Link
             to={routes.HOME_PAGE}
             className={classnames('button', 'column-4')}
+            // onClick={this.clearStore()}
           >
             Submit
       </Link>
@@ -46,4 +51,10 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, null)(VerifySurveyComponent);
+function mapStateToDispatch(dispatch) {
+  return {
+    clearStore: () => { dispatch(actions.clearStore()) }
+  }
+}
+
+export default connect(mapStateToProps, mapStateToDispatch)(VerifySurveyComponent);

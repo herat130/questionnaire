@@ -24,14 +24,6 @@ body{
 	padding: 0;
 } 
 
-.answer-container{
-  min-height:13em; 
-  label.options{
-    display: inline-block;
-    margin-left: 1em;
-  }
-}
-
 input[type='radio']:hover{
   background-color: $theme-color;
 }
@@ -39,10 +31,10 @@ input[type='radio']:hover{
 .header , .footer{
   background-color: $theme-color;
   color: #fff;
-  min-height:5em;
+  min-height:3em;
 }
 .header-space{
-  padding: 1em;
+  padding: 0.4em;
   .header-navigation{
     .header-link{
       color:#fff;
@@ -62,3 +54,8 @@ input[type='radio']:hover{
 .text-center{
   text-align: center;
 }
+.blank-space-10{
+  height:10px;
+  display: block;
+}
+
