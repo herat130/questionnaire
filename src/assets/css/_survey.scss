@@ -1,7 +1,9 @@
+
 .landing{
   padding: 2em;
   max-width: $grid-max-width;
   margin: 0 auto;
+  
   .option-container{
     transition: all .5s ease-in-out;
     background-image: linear-gradient(to left, transparent 50%, #e1bbf1 50%);
@@ -9,9 +11,11 @@
     vertical-align: middle;
     background-size: 200% 100%;
     background-position: 100% top, 100% top;
-    padding: 0.5em 0.1em;
+    
     label ,input{
       margin-bottom:0 !important;
+      cursor:pointer;
+      padding: 0.5em 0.1em;
     }
     label{
       width:90%;
@@ -20,15 +24,17 @@
       width:10%
     }
     &:hover{
-      background-position: 0% top, 0% top;
-      color: #1c181d;
+      @extend .effects-container;
     }
-    &:active{
-      background-color: #e1bbf1;
-      color: #1c181d;
-    }    
   }
-  
+  .active-container{
+    @extend .effects-container;
+  }
+  .effects-container{
+    background-position: 0% top, 0% top;
+    border:1px dotted $theme-color;
+    color: #1c181d;
+  }
   .survey-title{
     text-overflow: ellipsis;
     width:inherit;
@@ -69,4 +75,26 @@
     overflow: scroll;
     height: 65%;
   }
+}
+
+.next{
+  transition: all .5s ease-in-out;
+  background-image: linear-gradient(to left, #9b4dca 50%, #e1bbf1 50%);
+  background-size: 200% 100%;
+  background-position: 100% top, 100% top;
+}
+.next:hover{
+  @extend .effects-container;
+  span{
+    position: relative;
+    animation-name: shift-text;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-duration: 3s;
+  }
+}
+
+@keyframes shift-text {
+  from { left: 0px; }
+  to { left: 30px; }
 }

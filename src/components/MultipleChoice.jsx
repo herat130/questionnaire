@@ -1,12 +1,13 @@
 import React from 'react';
+import classnames from 'classnames';
 
 export default class MultipleChoice extends React.Component {
 
   renderOptions() {
     const { choices } = this.props;
     return (choices || []).map(v =>
-      <div key={v.label}>
-        <div className="option-container">
+      <div key={v.label} >
+        <div className={classnames('option-container', { 'active-container': v.selected })}>
           <input
             key={v.value}
             id={v.label}

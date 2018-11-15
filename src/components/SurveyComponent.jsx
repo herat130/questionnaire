@@ -141,7 +141,7 @@ class SurveyComponent extends React.Component {
             className={classnames('button', 'previous')}
             onClick={() => this.goPrevious()}
           >
-            &lt; Return
+            <span className="return">&lt; Return</span>
         </button>
 
           <button
@@ -149,7 +149,7 @@ class SurveyComponent extends React.Component {
             className={classnames('button', 'next')}
             onClick={() => this.goNext()}
           >
-            Next &gt;
+            <span>Next &gt;</span>
          </button >
         </div>
         <div className={classnames('column-12', 'text-center')}>

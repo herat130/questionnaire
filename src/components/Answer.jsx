@@ -4,10 +4,6 @@ import InputAnswer from './InputAnswer';
 
 export default class Answer extends React.Component {
 
-  componentDidMount() {
-
-  }
-
   renderAnsComponent() {
     const { type, multiple, multiline, choices, input } = this.props;
     let inputType;
