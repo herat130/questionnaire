@@ -39,7 +39,7 @@ export class SurveyComponent extends React.Component {
     });
   }
 
-  updateStateAfterChange(updatedInput, choicesForUpdate) {
+  updateStateAfterChange({ updatedInput, choicesForUpdate }) {
     this.setState({
       currentUpdate: updatedInput,
       choices: choicesForUpdate,
@@ -54,22 +54,28 @@ export class SurveyComponent extends React.Component {
     const { choices } = this.state;
     const selectCondition = (multiple === 'true');
     let choicesForUpdate = [];
+
     if (question_type === 'multiple-choice' && !selectCondition) {
       choicesForUpdate = choices.map(v => Object.assign({}, v,
         { selected: v.value === updatedInput }));
-      this.updateStateAfterChange(updatedInput, choicesForUpdate);
+      this.updateStateAfterChange({ updatedInput, choicesForUpdate });
     } else if (question_type === 'multiple-choice' && selectCondition) {
       const index = choices.findIndex(v => v.value === updatedInput);
       const currentSelection = choices[index].selected;
       choices[index].selected = !currentSelection;
       choicesForUpdate = choices;
-      this.updateStateAfterChange(updatedInput, choices);
+      this.updateStateAfterChange({ updatedInput, choices });
     } else if (question_type === 'text') {
-      this.updateStateAfterChange(updatedInput, updatedInput);
+      this.updateStateAfterChange({ updatedInput, choicesForUpdate: updatedInput });
     }
     this.props.updateAnswers(currentOptionIndex, choicesForUpdate, updatedInput);
   }
 
+  /**
+   * Whenever we encounter required property in questions then always validate
+   * current question's , answer is available or not
+   * if not maintin the error state
+   */
   validateQuetions() {
     const { currentOptionIndex, quetions } = this.props;
     const currentQuetion = quetions[currentOptionIndex] || {};
@@ -84,6 +90,11 @@ export class SurveyComponent extends React.Component {
     return true;
   }
 
+  /**
+   * while going to next always needs to check for the jumps
+   * in case jumps available in current question then based on identifier choose the next question
+   * else move to immediate next questions to maintain the sequence
+   */
   goNext() {
     const { currentOptionIndex, quetions } = this.props;
     const { choices, input, currentUpdate } = this.state;
@@ -100,6 +111,7 @@ export class SurveyComponent extends React.Component {
       } else {
         this.props.goToNextQuetion((currentOptionIndex + 1), choices, input);
       }
+
       this.setState({
         ansError: null,
         currentUpdate: null,
