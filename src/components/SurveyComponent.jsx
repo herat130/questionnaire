@@ -2,12 +2,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { Link } from 'react-router-dom';
 import * as survey from '../actions/surey.action';
 import Answer from './Answer';
 import { VERIFY_SURVEY_FORM } from '../utils/survey.constant';
 
-class SurveyComponent extends React.Component {
+export class SurveyComponent extends React.Component {
 
   constructor(props) {
     super(props);
@@ -16,6 +17,7 @@ class SurveyComponent extends React.Component {
       choices: [],
       input: '',
       currentUpdate: null,
+      ansError: null,
     };
   }
 
@@ -35,11 +37,11 @@ class SurveyComponent extends React.Component {
       choices: currentQuetion.choices || [],
       input: currentQuetion.input || '',
       currentUpdate: null,
+      ansError: null,
     });
   }
 
   handleChangeOptions(e) {
-    console.log("-------");
     const updatedInput = e.target.value;
     const { currentOptionIndex, quetions } = this.props;
     const currentQuetion = quetions[currentOptionIndex] || {};
@@ -63,11 +65,17 @@ class SurveyComponent extends React.Component {
 
   }
 
-  validateForNext() {
+  validateQuetions() {
     const { currentOptionIndex, quetions } = this.props;
-    const currentQuetion = quetions[currentOptionIndex];
-    // check here with answer component too.
-    return currentQuetion.required;
+    const currentQuetion = quetions[currentOptionIndex] || {};
+
+    if (currentQuetion.required) {
+      this.setState({
+        ansError: 'Please Aswer the Current Quetion',
+      });
+      return false;
+    }
+    return true;
   }
 
   goNext() {
@@ -75,25 +83,28 @@ class SurveyComponent extends React.Component {
     const { choices, input, currentUpdate } = this.state;
     const currentQuetion = quetions[currentOptionIndex];
     // check jump in case of answer only
-    if (currentQuetion.jumps.length > 0 && !!currentUpdate) {
-      const jumpIndex = (currentQuetion.jumps || [])
-        .findIndex(v => v.conditions.find(iv => iv.value === currentUpdate))
-      const jumpToIdentifier = currentQuetion.jumps[jumpIndex].destination.id;
-      const nextQuetionIndex = quetions.findIndex(v => v.identifier === jumpToIdentifier);
-      this.props.goToNextQuetion(nextQuetionIndex, choices, input);
-    } else {
-      this.props.goToNextQuetion(currentOptionIndex + 1, choices, input);
-    }
+    if (this.validateQuetions())
+      if (currentQuetion.jumps.length > 0 && !!currentUpdate) {
+        const jumpIndex = (currentQuetion.jumps || [])
+          .findIndex(v => v.conditions.find(iv => iv.value === currentUpdate))
+        const jumpToIdentifier = currentQuetion.jumps[jumpIndex].destination.id;
+        const nextQuetionIndex = quetions.findIndex(v => v.identifier === jumpToIdentifier);
+        this.props.goToNextQuetion(nextQuetionIndex, choices, input);
+      } else {
+        this.props.goToNextQuetion(currentOptionIndex + 1, choices, input);
+      }
   }
 
   goPrevious() {
-    const { currentOptionIndex } = this.props;
+    const { currentOptionIndex, quetions } = this.props;
     this.props.goToPreviousQuetion(currentOptionIndex);
   }
 
   render() {
     const { currentOptionIndex, quetions, error, loading } = this.props;
-    const { choices, input } = this.state;
+    const { choices, input, ansError } = this.state;
+    const nextIndex = currentOptionIndex + 1;
+    const totalQuestions = quetions.length;;
     const currentQuetion = quetions[currentOptionIndex] || {};
     const type = currentQuetion.question_type;
     const multiple = currentQuetion.multiple === 'true';
@@ -115,7 +126,7 @@ class SurveyComponent extends React.Component {
       )
     }
 
-    if (quetions.length === 0) {
+    if (totalQuestions === 0) {
       return (
         <center>
           <h3 className="no-data">There are no survey Available</h3>
@@ -124,17 +135,27 @@ class SurveyComponent extends React.Component {
     }
 
     return (
-      <div className={classnames('landing')}>
-        <h3>{currentQuetion.headline} </h3>
-        <Answer
-          handleChangeOptions={this.handleChangeOptions}
-          type={type}
-          multiple={multiple}
-          multiline={multiline}
-          input={input}
-          choices={choices}
-        />
+      <div className={classnames('landing', 'survey-container')}>
 
+        <TransitionGroup>
+          <CSSTransition
+            key={currentQuetion.headline}
+            timeout={500}
+            classNames="fade"
+          >
+            <Answer
+              ansError={ansError}
+              question={currentQuetion.headline}
+              questionIndex={currentOptionIndex}
+              handleChangeOptions={this.handleChangeOptions}
+              type={type}
+              multiple={multiple}
+              multiline={multiline}
+              input={input}
+              choices={choices}
+            />
+          </CSSTransition>
+        </TransitionGroup>
         <div className="survey-navigation">
           <button
             disabled={currentOptionIndex === 0}
@@ -142,25 +163,24 @@ class SurveyComponent extends React.Component {
             onClick={() => this.goPrevious()}
           >
             <span className="return">&lt; Return</span>
-        </button>
+          </button>
 
           <button
-            disabled={currentOptionIndex === quetions.length - 1}
+            disabled={currentOptionIndex === totalQuestions - 1}
             className={classnames('button', 'next')}
             onClick={() => this.goNext()}
           >
             <span>Next &gt;</span>
-         </button >
-        </div>
-        <div className={classnames('column-12', 'text-center')}>
-          <div className="column-4" />
-          <Link
-            style={{ display: (currentOptionIndex + 1) === quetions.length ? 'block' : 'none' }}
-            className={classnames('button', 'submit', 'column-4')}
-            to={VERIFY_SURVEY_FORM}
-          >
-            Verify
+          </button >
+          <div className="blank-space-10" />
+          <span className={classnames('button', 'hide', { show: nextIndex === totalQuestions })}>
+            <Link
+              className={classnames('submit')}
+              to={VERIFY_SURVEY_FORM}
+            >
+              Verify & submit
          </Link>
+          </span >
         </div>
       </div>
     )
@@ -187,4 +207,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SurveyComponent);
-

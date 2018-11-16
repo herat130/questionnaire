@@ -1,6 +1,7 @@
 @import 'variables';
 @import 'grid';
 @import 'survey';
+@import 'transition';
 
 %clearfix {
 	*zoom: 1;
@@ -17,6 +18,7 @@
 html,
 body{
   height: 100%;
+  color:#548fc1;
 }
 
 *, *:after, *:before {
@@ -59,3 +61,12 @@ input[type='radio']:hover{
   display: block;
 }
 
+.hide{
+  display: none;
+}
+.show{
+  display: inline-block;
+}
+.error-ans{
+  color:brown;
+}

@@ -5,7 +5,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import configureStore from 'redux-mock-store';
 import { HashRouter } from 'react-router-dom';
 import thunk from 'redux-thunk';
-import SurveyComponent from '../SurveyComponent';
+import SurveyComponentConnected from '../SurveyComponent';
 import data, { questions, questions3 } from '../__mocks__/survey.data';
 
 configure({ adapter: new Adapter() });
@@ -22,7 +22,7 @@ describe('survey component test suits', () => {
     wrapper = mount(
       <Provider store={store}>
         <HashRouter>
-          <SurveyComponent />
+          <SurveyComponentConnected />
         </HashRouter>
       </Provider>);
     expect(wrapper.find('.no-data').length).toBe(1);
@@ -34,7 +34,7 @@ describe('survey component test suits', () => {
     wrapper = mount(
       <Provider store={newStore}>
         <HashRouter>
-          <SurveyComponent />
+          <SurveyComponentConnected />
         </HashRouter>
       </Provider>);
     expect(wrapper.find('.no-data').length).toBe(0);
@@ -54,7 +54,7 @@ describe('survey component test suits', () => {
     wrapper = mount(
       <Provider store={newStore}>
         <HashRouter>
-          <SurveyComponent />
+          <SurveyComponentConnected />
         </HashRouter>
       </Provider>);
     expect(wrapper.find('.no-data').length).toBe(0);
@@ -68,23 +68,4 @@ describe('survey component test suits', () => {
     expect(wrapper.find('.submit').get(0).props.style.display).toEqual('none');
   });
 
-  it('simulate click and check update state', () => {
-    initialData.questionnaire.questions = questions3;
-    const newStore = mockStore({ surveyReducer: initialData });
-    wrapper = mount(
-      <Provider store={newStore}>
-        <HashRouter>
-          <SurveyComponent />
-        </HashRouter>
-      </Provider>);
-    wrapper.setState({
-      choices: initialData.questionnaire.questions[0].choices,
-      input: '',  
-      currentUpdate: null,
-    });
-    wrapper.find("input[type='radio']").at(0).simulate('click');
-    // wrapper.instance().update();
-    console.log(wrapper.state());
-    console.log(store.getActions());
-  });
 });

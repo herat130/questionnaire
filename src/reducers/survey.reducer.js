@@ -1,6 +1,6 @@
 import * as survey from '../utils/survey.constant';
 
-const initialState = {
+export const initialState = {
   loading: true,
   error: false,
   questionnaire: {},
@@ -11,7 +11,8 @@ const initialState = {
 export default function (state = initialState, action) {
   let questions;
   let movingIndex;
-  switch (action.type) {
+  let updatedQuestionnaire;
+  switch ((action || {}).type) {
     case survey.FETCH_START:
       return Object.assign({}, state, { loading: true, error: false });
     case survey.FETCH_SUCCESS:
@@ -22,10 +23,10 @@ export default function (state = initialState, action) {
       questions = [...state.questionnaire.questions];
       questions[state.currentOptionIndex].choices = action.payload.choices;
       questions[state.currentOptionIndex].input = action.payload.input;
-      state.questionnaire.questions = questions;
+      updatedQuestionnaire = Object.assign({}, state.questionnaire, { questions });
 
       return Object.assign({}, state, {
-        questionnaire: state.questionnaire
+        questionnaire: updatedQuestionnaire
       });
     case survey.GO_TO_NEXT_QUETION:
       if (state.userTravrseQuetions.indexOf(action.payload.index) === -1) {
@@ -43,8 +44,8 @@ export default function (state = initialState, action) {
       return Object.assign({}, state, {
         currentOptionIndex: state.userTravrseQuetions[movingIndex],
       });
-      case survey.CLEAR_STORE:
-      return Object.assign({},state,{questionnaire:{}})
+    case survey.CLEAR_STORE:
+      return Object.assign({}, state, { questionnaire: {} })
     default:
       return state;
   }

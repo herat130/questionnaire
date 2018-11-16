@@ -5,11 +5,8 @@ import classnames from 'classnames';
 import { surveyFetchStart, surveyFetch } from '../actions/surey.action';
 import * as route from '../utils/survey.constant';
 
+// eslint-disable-next-line react/prefer-stateless-function
 class SurveyLanding extends Component {
-
-  componentDidMount() {
-    // this.props.fetchSurvey();
-  }
 
   render() {
 
@@ -26,8 +23,8 @@ class SurveyLanding extends Component {
         <p>Error</p>
       )
     }
-    return (
 
+    return (
       <div className="landing">
         <center>
           <h1 className="survey-title">{questionnaire.name}</h1>
@@ -36,7 +33,7 @@ class SurveyLanding extends Component {
             id="start-survey"
             className={classnames('btn','survey-button')}
             to={route.START_SURVEY_FORM}>
-            <span>Start Survey</span>
+            <span className={classnames('hvr-grow-shadow','button')}>Start Survey</span>
           </Link>
         </center>
       </div>

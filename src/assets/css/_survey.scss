@@ -1,3 +1,31 @@
+.hvr-overline-from-right {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  position: relative;
+  overflow: hidden;
+}
+.hvr-overline-from-right:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 100%;
+  right: 0;
+  top: 0;
+  background: #2098D1;
+  height: 4px;
+  -webkit-transition-property: left;
+  transition-property: left;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+}
+.hvr-overline-from-right:hover:before, .hvr-overline-from-right:focus:before, .hvr-overline-from-right:active:before {
+  left: 0;
+}
 
 @keyframes shift-text {
   from { left: 0px; }
@@ -7,12 +35,12 @@
 /* Wobble Skew */
 @-webkit-keyframes hvr-wobble-skew {
   16.65% {
-    -webkit-transform: skew(-12deg);
-    transform: skew(-12deg);
+    -webkit-transform: skew(-40deg);
+    transform: skew(-40deg);
   }
   33.3% {
-    -webkit-transform: skew(10deg);
-    transform: skew(10deg);
+    -webkit-transform: skew(20deg);
+    transform: skew(20deg);
   }
   49.95% {
     -webkit-transform: skew(-6deg);
@@ -33,12 +61,12 @@
 }
 @keyframes hvr-wobble-skew {
   16.65% {
-    -webkit-transform: skew(-12deg);
-    transform: skew(-12deg);
+    -webkit-transform: skew(-40deg);
+    transform: skew(-40deg);
   }
   33.3% {
-    -webkit-transform: skew(10deg);
-    transform: skew(10deg);
+    -webkit-transform: skew(20deg);
+    transform: skew(20deg);
   }
   49.95% {
     -webkit-transform: skew(-6deg);
@@ -60,11 +88,14 @@
 
 .landing{
   padding: 2em;
+  position: relative;
   max-width: $grid-max-width;
   margin: 0 auto;
-  
+  a.submit{
+    color:#fff;
+  }
   .option-container{
-    transition: all .5s ease-in-out;
+    transition: all .5s ease-in-out;    
     background-image: linear-gradient(to left, transparent 50%, #e1bbf1 50%);
     border: 1px dotted #ccc;
     vertical-align: middle;
@@ -83,10 +114,11 @@
       width:10%
     }
     &:hover{
-      @extend .effects-container;
+      @extend .effects-container;      
     }
   }
   .active-container{
+    animation: hvr-wobble-skew 2s ease;
     @extend .effects-container;
   }
   .effects-container{
@@ -111,6 +143,23 @@
       font-weight: bold;
     }
   }
+  .hvr-grow-shadow {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: box-shadow, transform;
+    transition-property: box-shadow, transform;
+  }
+  .hvr-grow-shadow:hover, .hvr-grow-shadow:focus, .hvr-grow-shadow:active {
+    box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.5);
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+  
 }
 
 .answer-container{
@@ -123,8 +172,8 @@
 .survey-navigation{
   text-align: center;
   .button{
-    &:last-child{
-      margin-left: 1em;
+    &:nth-child(2){
+      margin-left: 2em;
     }
   }
 }
@@ -136,19 +185,41 @@
   }
 }
 
-.next{
+.next ,.previous{
   transition: all .5s ease-in-out;
   background-image: linear-gradient(to left, #9b4dca 50%, #e1bbf1 50%);
   background-size: 200% 100%;
   background-position: 100% top, 100% top;
 }
-.next:hover{
+.next:not(:disabled):hover,.previous:not(:disabled):hover{
   @extend .effects-container;
+  animation: hvr-wobble-skew 2s ease .2s;
   span{
     position: relative;
-    animation-name: shift-text;
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: infinite;
-    animation-duration: 3s;
+    animation-name: shift-text 1s ease infinite;    
+  }
+}
+.survey-container{
+  position: relative;
+  height: 100%;
+  .answer-container{
+    position: absolute;
+    left: 0%;
+    top: 0%;
+    width: 100%;
+    padding: 2em 3em;
+  }
+  .odd{
+    color: $odd-color;
+  }
+  .even{
+    color: $even-color;
+  }
+  .survey-navigation{
+    position: absolute;
+    bottom: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
   }
 }
