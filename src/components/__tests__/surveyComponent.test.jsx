@@ -44,8 +44,7 @@ describe('survey component test suits', () => {
 
     expect(wrapper.find('.next').length).toBe(1);
     expect(wrapper.find('.next').get(0).props.disabled).toEqual(true);
-
-    expect(wrapper.find('.submit').get(0).props.style.display).toEqual('block');
+    expect(wrapper.find('.button').at(2).hasClass('show')).toBe(true);
   });
 
   it('in case of more than 1 question it should render', () => {
@@ -64,8 +63,7 @@ describe('survey component test suits', () => {
 
     expect(wrapper.find('.next').length).toBe(1);
     expect(wrapper.find('.next').get(0).props.disabled).toEqual(false);
-
-    expect(wrapper.find('.submit').get(0).props.style.display).toEqual('none');
+    expect(wrapper.find('.button').at(2).hasClass('hide')).toBe(true);  
   });
 
 });

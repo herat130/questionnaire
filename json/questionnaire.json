@@ -10,7 +10,7 @@
         "headline": "Wen möchtest Du versichern?",
         "description": null,
         "required": true,
-        "multiple": "false",
+        "multiple": "true",
         "choices": [
           {
             "label": "Meine Familie mit Kindern",
@@ -87,7 +87,7 @@
         "identifier": "list_12110966",
         "headline": "Wie wichtig ist Dir die Absicherung gegen Mietsachschäden?",
         "description": null,
-        "required": false,
+        "required": true,
         "multiple": "false",
         "choices": [
           {

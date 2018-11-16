@@ -5,7 +5,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import configureStore from 'redux-mock-store';
 import { HashRouter } from 'react-router-dom';
 import thunk from 'redux-thunk';
-import VerifySurveyComponent from '../VerifySurveyComponent';
+import { ConnectedVerifyComponent } from '../VerifySurveyComponent';
 import data, { questionsAns } from '../__mocks__/survey.data';
 
 configure({ adapter: new Adapter() });
@@ -22,9 +22,20 @@ describe('verify survey form test suits', () => {
     wrapper = mount(
       <Provider store={store}>
         <HashRouter>
-          <VerifySurveyComponent />
+          <ConnectedVerifyComponent />
         </HashRouter>
       </Provider>);
-    expect(wrapper.find('.qtn-ans').length).toBe(questionsAns.filter(v => !!v.input).length);  
+    expect(wrapper.find('.qtn-ans').length).toBe(questionsAns.filter(v => !!v.input).length);
+  });
+
+  it('should have submit button', () => {
+    wrapper = mount(
+      <Provider store={store}>
+        <HashRouter>
+          <ConnectedVerifyComponent />
+        </HashRouter>
+      </Provider>);
+      // console.log(wrapper.debug());
+    expect(wrapper.find('.button').length).toBe(1);
   });
 });

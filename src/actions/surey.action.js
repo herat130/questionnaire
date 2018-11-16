@@ -43,8 +43,14 @@ export function updateAnswers(index, choices, input) {
   }
 }
 
-export function clearStore(){
-  return{
-    type:survey.CLEAR_STORE,
+export function clearStore() {
+  return {
+    type: survey.CLEAR_STORE,
+  }
+}
+
+export function submitForm() {
+  return {
+    type: survey.SUBMIT_FORM,
   }
 }

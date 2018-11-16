@@ -36,8 +36,6 @@ export class SurveyComponent extends React.Component {
     this.setState({
       choices: currentQuetion.choices || [],
       input: currentQuetion.input || '',
-      currentUpdate: null,
-      ansError: null,
     });
   }
 
@@ -49,12 +47,21 @@ export class SurveyComponent extends React.Component {
     const { choices } = this.state;
     const selectCondition = (multiple === 'true');
     if (question_type === 'multiple-choice' && !selectCondition) {
-      const a = choices.map(v => Object.assign({}, v, { selected: v.value === updatedInput }));
+      const singleChoice = choices.map(v => Object.assign({}, v, { selected: v.value === updatedInput }));
       this.setState({
         currentUpdate: updatedInput,
-        choices: a,
+        choices: singleChoice,
       });
-      this.props.updateAnswers(currentOptionIndex, a, updatedInput);
+      this.props.updateAnswers(currentOptionIndex, singleChoice, updatedInput);
+    } else if (question_type === 'multiple-choice' && selectCondition) {
+      const index = choices.findIndex(v => v.value === updatedInput);
+      const currentSelection = choices[index].selected;
+      choices[index].selected = !currentSelection;
+      this.setState({
+        currentUpdate: updatedInput,
+        choices,
+      });
+      this.props.updateAnswers(currentOptionIndex, choices, updatedInput);
     } else if (question_type === 'text') {
       this.setState({
         currentUpdate: updatedInput,
@@ -62,14 +69,14 @@ export class SurveyComponent extends React.Component {
       });
       this.props.updateAnswers(currentOptionIndex, [], updatedInput);
     }
-
   }
 
   validateQuetions() {
     const { currentOptionIndex, quetions } = this.props;
     const currentQuetion = quetions[currentOptionIndex] || {};
+    const lastUserInput = currentQuetion.input;
 
-    if (currentQuetion.required) {
+    if (currentQuetion.required && !lastUserInput) {
       this.setState({
         ansError: 'Please Aswer the Current Quetion',
       });
@@ -83,7 +90,7 @@ export class SurveyComponent extends React.Component {
     const { choices, input, currentUpdate } = this.state;
     const currentQuetion = quetions[currentOptionIndex];
     // check jump in case of answer only
-    if (this.validateQuetions())
+    if (this.validateQuetions()) {
       if (currentQuetion.jumps.length > 0 && !!currentUpdate) {
         const jumpIndex = (currentQuetion.jumps || [])
           .findIndex(v => v.conditions.find(iv => iv.value === currentUpdate))
@@ -91,12 +98,17 @@ export class SurveyComponent extends React.Component {
         const nextQuetionIndex = quetions.findIndex(v => v.identifier === jumpToIdentifier);
         this.props.goToNextQuetion(nextQuetionIndex, choices, input);
       } else {
-        this.props.goToNextQuetion(currentOptionIndex + 1, choices, input);
+        this.props.goToNextQuetion((currentOptionIndex + 1), choices, input);
       }
+      this.setState({
+        ansError: null,
+        currentUpdate: null,
+      });
+    }
   }
 
   goPrevious() {
-    const { currentOptionIndex, quetions } = this.props;
+    const { currentOptionIndex } = this.props;
     this.props.goToPreviousQuetion(currentOptionIndex);
   }
 
@@ -173,14 +185,14 @@ export class SurveyComponent extends React.Component {
             <span>Next &gt;</span>
           </button >
           <div className="blank-space-10" />
-          <span className={classnames('button', 'hide', { show: nextIndex === totalQuestions })}>
+          <div className={classnames('button', 'hide', { show: nextIndex === totalQuestions })}>
             <Link
               className={classnames('submit')}
               to={VERIFY_SURVEY_FORM}
             >
               Verify & submit
          </Link>
-          </span >
+          </div >
         </div>
       </div>
     )

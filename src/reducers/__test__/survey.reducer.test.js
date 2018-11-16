@@ -27,6 +27,7 @@ describe('test complete reducer', () => {
     };
     const reducerObj = surveyReducer(initialStateData, action);
     expect(reducerObj.loading).toEqual(false);
+    expect(reducerObj.error).toEqual(false);
     expect(reducerObj.questionnaire).toEqual(mockData.questionnaire);
   });
 

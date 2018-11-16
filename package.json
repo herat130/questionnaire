@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "build": "webpack --mode production",
-    "start": "webpack-dev-server --inline --hot"
+    "start": "webpack-dev-server --inline --hot",
+    "lint": "eslint src"
   },
   "keywords": [
     "questionnaire",

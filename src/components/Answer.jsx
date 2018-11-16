@@ -7,34 +7,26 @@ export default class Answer extends React.Component {
 
   renderAnsComponent() {
     const { type, multiple, multiline, choices, input } = this.props;
-    let inputType;
+    let componentToBeRender;
     if (type === 'multiple-choice' && choices.length > 0) {
-      if (!multiple) {
-        // render radio
-      } else {
-        // render checkbox
-      }
-      return (
-        <MultipleChoice
-          handleChangeOptions={this.props.handleChangeOptions}
-          type={'radio'}
-          choices={choices}
-        />
-      )
-    }
-    if (type === 'text' && !multiline) {
-      // render textField
-      inputType = 'text';
-    } else {
-      inputType = 'textarea';
-      // render textArea
-    }
-    return (
-      <InputAnswer
-        type={inputType}
+      // considering multiple property true should be checkbox option
+      // considering multiple property false should be radio option
+
+      componentToBeRender = <MultipleChoice
+        handleChangeOptions={this.props.handleChangeOptions}
+        type={!multiple ? 'radio' : 'checkbox'}
+        choices={choices}
+      />
+    } else if (type === 'text') {
+      // considering multiline property true should be textarea option
+      // considering multiline property false should be text option
+      componentToBeRender = <InputAnswer
+        type={!multiline ? 'text' : 'textarea'}
         input={input}
         handleChangeOptions={this.props.handleChangeOptions}
-      />)
+      />;
+    }
+    return componentToBeRender;
   }
 
   render() {

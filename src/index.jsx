@@ -14,6 +14,7 @@ import * as action from './actions/surey.action';
 const middleWare = applyMiddleware(thunk, logger);
 const store = createStore(allReducer, middleWare);
 
+/** For Cross browser web app required polyfills has been added */
 polyfillForApp();
 
 // initial data fetch required in case user directly move to start-survey route 

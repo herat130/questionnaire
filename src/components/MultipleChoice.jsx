@@ -4,14 +4,14 @@ import classnames from 'classnames';
 export default class MultipleChoice extends React.Component {
 
   renderOptions() {
-    const { choices } = this.props;
+    const { choices, type } = this.props;
     return (choices || []).map(v =>
       <div key={v.label} >
         <div className={classnames('option-container', { 'active-container': v.selected })}>
           <input
             key={v.value}
             id={v.label}
-            type='radio'
+            type={type}
             value={v.value}
             checked={v.selected}
             onChange={this.props.handleChangeOptions}
