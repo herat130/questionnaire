@@ -134,6 +134,7 @@ export class SurveyComponent extends React.Component {
     const type = currentQuetion.question_type;
     const multiple = currentQuetion.multiple === 'true';
     const multiline = currentQuetion.multiline === 'true';
+    const headline = currentQuetion.headline;
 
     if (loading) {
       return (
@@ -164,13 +165,13 @@ export class SurveyComponent extends React.Component {
         <ErrorBoundary>
           <TransitionGroup>
             <CSSTransition
-              key={currentQuetion.headline}
+              key={headline}
               timeout={500}
               classNames="fade"
             >
               <Answer
                 ansError={ansError}
-                question={currentQuetion.headline}
+                question={headline}
                 questionIndex={currentOptionIndex}
                 handleChangeOptions={this.handleChangeOptions}
                 type={type}

@@ -18,7 +18,7 @@ class SurveyLanding extends Component {
   render() {
 
     const { error, loading, questionnaire } = this.props;
-
+    
     if (loading) {
       return (
         <p>loading</p>
@@ -55,7 +55,7 @@ function mapStateToProps(state) {
   return {
     loading: state.surveyReducer.loading,
     error: state.surveyReducer.error,
-    questionnaire: state.surveyReducer.questionnaire,
+    questionnaire: state.surveyReducer.questionnaire || {},
   }
 }
 
