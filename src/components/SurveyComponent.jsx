@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import * as survey from '../actions/surey.action';
 import Answer from './Answer';
 import { VERIFY_SURVEY_FORM } from '../utils/survey.constant';
+import ErrorBoundary from '../components/ErrorBoundary';
 
 export class SurveyComponent extends React.Component {
 
@@ -160,26 +161,27 @@ export class SurveyComponent extends React.Component {
 
     return (
       <div className={classnames('landing', 'survey-container')}>
-
-        <TransitionGroup>
-          <CSSTransition
-            key={currentQuetion.headline}
-            timeout={500}
-            classNames="fade"
-          >
-            <Answer
-              ansError={ansError}
-              question={currentQuetion.headline}
-              questionIndex={currentOptionIndex}
-              handleChangeOptions={this.handleChangeOptions}
-              type={type}
-              multiple={multiple}
-              multiline={multiline}
-              input={input}
-              choices={choices}
-            />
-          </CSSTransition>
-        </TransitionGroup>
+        <ErrorBoundary>
+          <TransitionGroup>
+            <CSSTransition
+              key={currentQuetion.headline}
+              timeout={500}
+              classNames="fade"
+            >
+              <Answer
+                ansError={ansError}
+                question={currentQuetion.headline}
+                questionIndex={currentOptionIndex}
+                handleChangeOptions={this.handleChangeOptions}
+                type={type}
+                multiple={multiple}
+                multiline={multiline}
+                input={input}
+                choices={choices}
+              />
+            </CSSTransition>
+          </TransitionGroup>
+        </ErrorBoundary>
         <div className="survey-navigation">
           <button
             disabled={currentOptionIndex === 0}

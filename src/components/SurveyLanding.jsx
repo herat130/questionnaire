@@ -4,12 +4,13 @@ import { Link } from 'react-router-dom';
 import classnames from 'classnames';
 import { surveyFetchStart, surveyFetch } from '../actions/surey.action';
 import * as route from '../utils/survey.constant';
+import ErrorBoundary from '../components/ErrorBoundary';
 
 class SurveyLanding extends Component {
 
   componentWillMount() {
     const { loading } = this.props;
-    if(loading === true){
+    if (loading === true) {
       this.props.fetchSurvey()
     }
   }
@@ -31,18 +32,20 @@ class SurveyLanding extends Component {
     }
 
     return (
-      <div className="landing">
-        <center>
-          <h1 className="survey-title">{questionnaire.name}</h1>
-          <p>{questionnaire.description}</p>
-          <Link
-            id="start-survey"
-            className={classnames('btn', 'survey-button')}
-            to={route.START_SURVEY_FORM}>
-            <span className={classnames('hvr-grow-shadow', 'button')}>Start Survey</span>
-          </Link>
-        </center>
-      </div>
+      <ErrorBoundary>
+        <div className="landing">
+          <center>
+            <h1 className="survey-title">{questionnaire.name}</h1>
+            <p>{questionnaire.description}</p>
+            <Link
+              id="start-survey"
+              className={classnames('btn', 'survey-button')}
+              to={route.START_SURVEY_FORM}>
+              <span className={classnames('hvr-grow-shadow', 'button')}>Start Survey</span>
+            </Link>
+          </center>
+        </div>
+      </ErrorBoundary>
     )
   }
 
